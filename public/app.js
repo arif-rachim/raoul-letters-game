@@ -3,7 +3,7 @@
  */
 
 let {html,htmlCollection} = new Context();
-
+let render = yalla.render;
 const repaintPage = () => {
     render(html`
     <style>
@@ -49,10 +49,9 @@ const repaintPage = () => {
     `,document.body);
 };
 
-
-
 const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-const audiosArray = letters.map(letter => new Audio(`./assets/audio/${letter}.mp3`));
+const letterAudios = letters.map(letter => new Audio(`./assets/audio/${letter}.mp3`));
+const audioFromLetter = (letter) => letterAudios[letters.indexOf(letter)];
 const notRightAudio = new Audio('./assets/audio/notright.mp3');
 const goodjob1Audio = new Audio('./assets/audio/good-job-1.mp3');
 const goodjob2Audio = new Audio('./assets/audio/good-job-2.mp3');
@@ -66,20 +65,20 @@ strike = parseInt(strike);
 
 const startPlay = () => {
     startChallange.play();
-    audiosArray.forEach(audio => {
-        audio.play();
-        audio.pause();
-    });
-}
+    startChallange.letter = generateLetter();
+    let audio = audioFromLetter(startChallange.letter);
+    debugger;
+    audio.play();
+    audio.pause();
+};
 
-const openNextPage = () => {
-    let generateLetter = () => {
-        let letter = letters[Math.round(Math.random()* letters.length)];
-        return letter ? letter : generateLetter();
-    };
+const generateLetter = () => {
+    let letter = letters[Math.round(Math.random()* letters.length)];
+    return letter ? letter : generateLetter();
+};
 
-    let answer = generateLetter();
-    let questions = [answer];
+const openNextPage = (nextLetter) => {
+    let questions = [nextLetter];
     while(questions.length<4){
         let falseLetter = generateLetter();
         if(questions.indexOf(falseLetter)<0){
@@ -87,13 +86,15 @@ const openNextPage = () => {
         }
     }
     shuffle(questions);
-    audiosArray[letters.indexOf(answer)].play();
+    audioFromLetter(nextLetter).play();
     render(html`
     <style>
+        
         body{
             margin: 0px;
             padding: 0px;
         }
+        
         h1{
             font-weight: 100;
             font-size: 4em;
@@ -163,13 +164,13 @@ const openNextPage = () => {
             <td style="text-align:center">
             <table style="margin-top: 20px;" cellspacing="10px" >
                 <tr>
-                    <td onclick="${e => questions[0] == answer ? correctAnswer() : wrongAnswer()}" >
+                    <td onclick="${e => questions[0] == nextLetter ? correctAnswer() : wrongAnswer()}" >
                         <div style="position: relative" class="button">
                         <img src="assets/${questions[0]}.jpg" >
                         <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[0].toUpperCase()}</label>
                         </div>
                     </td>
-                    <td onclick="${e => questions[1] == answer ? correctAnswer() : wrongAnswer()}" >
+                    <td onclick="${e => questions[1] == nextLetter ? correctAnswer() : wrongAnswer()}" >
                         <div style="position: relative" class="button">
                         <img src="assets/${questions[1]}.jpg" >
                         <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[1].toUpperCase()}</label>
@@ -178,13 +179,13 @@ const openNextPage = () => {
                     </td>
                 </tr>
                 <tr>
-                    <td onclick="${e => questions[2] == answer ? correctAnswer() : wrongAnswer()}">
+                    <td onclick="${e => questions[2] == nextLetter ? correctAnswer() : wrongAnswer()}">
                         <div style="position: relative" class="button">
                         <img src="assets/${questions[2]}.jpg" >
                         <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[2].toUpperCase()}</label>
                         </div>
                     </td>
-                    <td onclick="${e => questions[3] == answer ? correctAnswer() : wrongAnswer()}">
+                    <td onclick="${e => questions[3] == nextLetter ? correctAnswer() : wrongAnswer()}">
                         <div style="position: relative" class="button">
                         <img src="assets/${questions[3]}.jpg" >
                         <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[3].toUpperCase()}</label>
@@ -197,10 +198,8 @@ const openNextPage = () => {
     </table>
     <button onclick="${e => resetScore()}" style="border: none;font-family: 'Lato';font-weight: 300;font-size:1em;color: white;background-color: red;position: absolute;bottom: 10px;left: 10px;">Reset</button>
     
-`,document.body).then(function(){
-        setTimeout(function(){
-            render(html`<h1 class="">${score}</h1>`,document.getElementById('header'));
-        },1000);
+`,document.body).then(() => {
+        setTimeout(() => render(html`<h1 class="">${score}</h1>`,document.getElementById('header')),1000);
     });
 };
 
@@ -212,25 +211,19 @@ const resetScore = () => {
         localStorage.setItem('score',score);
         localStorage.setItem('strike',strike);
         render(html`<h1 class="animated bounceIn">${score}</h1>`,document.getElementById('header'));
-        setTimeout(function(){
-            render(html`<h1 >${score}</h1>`,document.getElementById('header'));
-        },1000)
+        setTimeout(() => render(html`<h1 >${score}</h1>`,document.getElementById('header')),1000);
     }
 }
 
 const shuffle = (array) => {
     let currentIndex = array.length, temporaryValue, randomIndex;
-
     while (0 !== currentIndex) {
-
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
@@ -244,52 +237,52 @@ const wrongAnswer = () => {
     localStorage.setItem('strike',strike);
     notRightAudio.play();
     render(html`<h1 class="animated bounceIn">${score}</h1>`,document.getElementById('header'));
-    setTimeout(function(){
-        render(html`<h1 >${score}</h1>`,document.getElementById('header'));
-    },1000)
+    setTimeout(() => render(html`<h1 >${score}</h1>`,document.getElementById('header')),1000)
 }
 
 const correctAnswer = () => {
     strike++;
     let multiply = 1;
     if(score < 20){
-        multiply = 4;
-    }else if(score < 50){
-        multiply = 3;
-    }else if(score < 100){
         multiply = 2;
+    }else if(score < 50){
+        multiply = 1;
     }
     score = score + multiply;
     localStorage.setItem('score',score);
     localStorage.setItem('strike',strike);
-    audiosArray.forEach(audio => {
-        audio.play();
-        audio.pause();
-    });
+    let nextLetter = generateLetter();
+    let nextAudio = audioFromLetter(nextLetter);
+    try{
+        nextAudio.play();
+        nextAudio.pause();
+    }catch(err){
+        console.log(err);
+    }
     if(strike % 10 == 0){
+        goodjob4Audio.letter = nextLetter;
         goodjob4Audio.play();
     }else if(strike == 7 ){
+        goodjob3Audio.letter = nextLetter;
         goodjob3Audio.play();
     }else if(strike == 5){
+        goodjob2Audio.letter = nextLetter;
         goodjob2Audio.play();
     }else if(strike % 3 == 0 ){
+        goodjob1Audio.letter = nextLetter;
         goodjob1Audio.play();
     }else{
-        openNextPageNow();
+        openNextPageNow({target : {letter : nextLetter}});
     }
 }
 
-const openNextPageNow = () => {
-    render(html`<h1 style="margin: 0px;display: inline-block" class="animated bounceIn">${score}</h1>`,document.getElementById('header')).then(function(){
-        openNextPage();
-    });
+const openNextPageNow = (e) => {
+    let letter = e.target.letter;
+    render(html`<h1 style="margin: 0px;display: inline-block" class="animated bounceIn">${score}</h1>`,document.getElementById('header')).then(() => openNextPage(letter));
 }
 // AUDIOS
 let startChallange = new Audio('./assets/audio/challange-whichone.mp3');
-const openPageAfterSometime = function(){
-    openNextPage();
-};
-startChallange.onended = openNextPage;
+startChallange.onended = (e) => openNextPage(e.target.letter);
 goodjob1Audio.onended = openNextPageNow;
 goodjob2Audio.onended = openNextPageNow;
 goodjob3Audio.onended = openNextPageNow;
