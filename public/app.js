@@ -96,14 +96,20 @@ const openNextPage = () => {
         }
         h1{
             font-weight: 100;
-            font-size: 3em;
+            font-size: 4em;
+            color : #666;
+            bottom : 3px;
+            right : 10px;
+            margin : 0px;
+            position : absolute;
+            display: inline-block;
         }
         table{
             text-align: center;
         }
         img {
-            width: 48vw;
-            height: 30vh;
+            width: calc( (100vw - 148px) / 2);
+            height: 25vh;
         }
         
         .background-color {
@@ -122,38 +128,67 @@ const openNextPage = () => {
         
         .header{
             text-align: right;
-            padding: 10px;
+            padding : 10px;
+            height : 60px;
+            position : relative;
         }
         
         .hidden{
             display: none;
         }
         
+        .button {
+            padding: 15px 25px;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            color: #fff;
+            border: 1px solid #CCC;
+            border-radius: 15px;
+            box-shadow: 0 9px #CCC;
+        }
+        
+        .button:active {
+            box-shadow: 0 5px #BBB;
+            transform: translateY(4px);
+        }
+        
+        
+        
     </style>
-    <div class="background-color header shadow" id="header" style="height: 50px"></div>
+    <div class="background-color header shadow" id="header" ></div>
     </div>
     <table>
         <tr >
-            <td>
-            <table style="margin-top: 20px">
+            <td style="text-align:center">
+            <table style="margin-top: 20px;" cellspacing="10px" >
                 <tr>
-                    <td style="position: relative">
-                        <img src="assets/${questions[0]}.jpg" onclick="${e => questions[0] == answer ? correctAnswer() : wrongAnswer()}">
-                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 0px;right: 0px">${questions[0].toUpperCase()}</label>
+                    <td onclick="${e => questions[0] == answer ? correctAnswer() : wrongAnswer()}" >
+                        <div style="position: relative" class="button">
+                        <img src="assets/${questions[0]}.jpg" >
+                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[0].toUpperCase()}</label>
+                        </div>
                     </td>
-                    <td style="position: relative">
-                        <img src="assets/${questions[1]}.jpg" onclick="${e => questions[1] == answer ? correctAnswer() : wrongAnswer()}">
-                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 0px;right: 0px">${questions[1].toUpperCase()}</label>
+                    <td onclick="${e => questions[1] == answer ? correctAnswer() : wrongAnswer()}" >
+                        <div style="position: relative" class="button">
+                        <img src="assets/${questions[1]}.jpg" >
+                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[1].toUpperCase()}</label>
+                        </div>
+                        
                     </td>
                 </tr>
                 <tr>
-                    <td style="position: relative">
-                        <img src="assets/${questions[2]}.jpg" onclick="${e => questions[2] == answer ? correctAnswer() : wrongAnswer()}">
-                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 0px;right: 0px">${questions[2].toUpperCase()}</label>
+                    <td onclick="${e => questions[2] == answer ? correctAnswer() : wrongAnswer()}">
+                        <div style="position: relative" class="button">
+                        <img src="assets/${questions[2]}.jpg" >
+                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[2].toUpperCase()}</label>
+                        </div>
                     </td>
-                    <td style="position: relative">
-                        <img src="assets/${questions[3]}.jpg" onclick="${e => questions[3] == answer ? correctAnswer() : wrongAnswer()}">
-                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 0px;right: 0px">${questions[3].toUpperCase()}</label>
+                    <td onclick="${e => questions[3] == answer ? correctAnswer() : wrongAnswer()}">
+                        <div style="position: relative" class="button">
+                        <img src="assets/${questions[3]}.jpg" >
+                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[3].toUpperCase()}</label>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -164,7 +199,7 @@ const openNextPage = () => {
     
 `,document.body).then(function(){
         setTimeout(function(){
-            render(html`<h1 style="margin: 0px;display: inline-block" class="">${score}</h1>`,document.getElementById('header'));
+            render(html`<h1 class="">${score}</h1>`,document.getElementById('header'));
         },1000);
     });
 };
@@ -176,9 +211,9 @@ const resetScore = () => {
         strike = 0;
         localStorage.setItem('score',score);
         localStorage.setItem('strike',strike);
-        render(html`<h1 style="margin: 0px;display: inline-block" class="animated bounceIn">${score}</h1>`,document.getElementById('header'));
+        render(html`<h1 class="animated bounceIn">${score}</h1>`,document.getElementById('header'));
         setTimeout(function(){
-            render(html`<h1 style="margin: 0px;display: inline-block">${score}</h1>`,document.getElementById('header'));
+            render(html`<h1 >${score}</h1>`,document.getElementById('header'));
         },1000)
     }
 }
@@ -208,9 +243,9 @@ const wrongAnswer = () => {
     localStorage.setItem('score',score);
     localStorage.setItem('strike',strike);
     notRightAudio.play();
-    render(html`<h1 style="margin: 0px;display: inline-block" class="animated bounceIn">${score}</h1>`,document.getElementById('header'));
+    render(html`<h1 class="animated bounceIn">${score}</h1>`,document.getElementById('header'));
     setTimeout(function(){
-        render(html`<h1 style="margin: 0px;display: inline-block">${score}</h1>`,document.getElementById('header'));
+        render(html`<h1 >${score}</h1>`,document.getElementById('header'));
     },1000)
 }
 
