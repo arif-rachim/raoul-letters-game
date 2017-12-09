@@ -1,9 +1,11 @@
 CACHE MANIFEST
-# 2010-06-18:v9
+# 2010-06-18:v11
 
 CACHE:
 # Explicitly cached 'master entries'.
-assets/raoul.jpg
+index.html
+app.js
+app.es5.js
 assets/a.jpg
 assets/b.jpg
 assets/c.jpg
@@ -30,6 +32,15 @@ assets/w.jpg
 assets/x.jpg
 assets/y.jpg
 assets/z.jpg
+assets/border.png
+assets/ear.png
+assets/header-background.jpg
+assets/play.png
+assets/turn-on-logo.jpg
+assets/speaker.png
+assets/raoul-name.jpg
+assets/raoul-photo.jpg
+assets/reset.png
 assets/audio/a.mp3
 assets/audio/b.mp3
 assets/audio/c.mp3

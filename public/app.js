@@ -8,7 +8,7 @@ const repaintPage = () => {
     render(html`
     <style>
         body{
-            font-family: 'Lato', sans-serif;
+            font-family: 'Gochi Hand', sans-serif;
             margin: 0px;
             padding: 0px;
         }
@@ -28,7 +28,7 @@ const repaintPage = () => {
         
         .btn {
             border: none;
-            font-family: 'Lato', sans-serif;
+            font-family: 'Gochi Hand', sans-serif;
             color: #ffffff;
             font-size: 28px;
             background: #3498db;
@@ -40,10 +40,17 @@ const repaintPage = () => {
     </style>
     <div class="container">
         <div class="center">
-            <img src="assets/raoul.jpg" class="raul-pic" alt="Responsive image">
+            <div style="margin-top: 10px">
+            <img src="assets/raoul-name.jpg" alt="Responsive image" style="width: 30%;margin-bottom: -10px">
+            <label style="font-size: 2em;"> : </label>
+            <img src="assets/turn-on-logo.jpg" style="width: 30%;margin-bottom: -10px">
+            <img src="assets/speaker.png" style="width: 40px;margin-bottom: -10px" class="animated pulse infinite">
+            </div>
+            <img src="assets/raoul-photo.jpg" class="raul-pic" alt="Responsive image" >
+            
         </div>
         <div class="center">
-            <button class="btn start-button animated bounceIn " onclick="${e => startPlay()}">Start</button>
+            <img src="assets/play.png" onclick="${e => startPlay()}" class="start-button animated bounceIn " style="width: 30%">
         </div>
     </div>
     `,document.body);
@@ -67,7 +74,6 @@ const startPlay = () => {
     startChallange.play();
     startChallange.letter = generateLetter();
     let audio = audioFromLetter(startChallange.letter);
-    debugger;
     audio.play();
     audio.pause();
 };
@@ -96,9 +102,9 @@ const openNextPage = (nextLetter) => {
         }
         
         h1{
-            font-weight: 100;
+            font-family : 'Gochi Hand';
             font-size: 4em;
-            color : #666;
+            color : #575294;
             bottom : 3px;
             right : 10px;
             margin : 0px;
@@ -113,13 +119,6 @@ const openNextPage = (nextLetter) => {
             height: 25vh;
         }
         
-        .background-color {
-            background: #f2f6ff;
-            background: -moz-linear-gradient(top, #f2f6ff 2%, #f4f4eb 100%);
-            background: -webkit-linear-gradient(top, #f2f6ff 2%,#f4f4eb 100%);
-            background: linear-gradient(to bottom, #f2f6ff 2%,#f4f4eb 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6ff', endColorstr='#f4f4eb',GradientType=0 );
-        }
         
         .shadow {
             -webkit-box-shadow: -1px 1px 35px -3px rgba(0,0,0,0.64);
@@ -132,6 +131,9 @@ const openNextPage = (nextLetter) => {
             padding : 10px;
             height : 60px;
             position : relative;
+            background-image: url("assets/header-background.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
         }
         
         .hidden{
@@ -154,8 +156,18 @@ const openNextPage = (nextLetter) => {
             transform: translateY(4px);
         }
         
+        .watermark{
+            font-family : 'Gochi Hand';
+            font-size: 4em;
+            opacity: 0.1;
+            position: absolute;
+            bottom: 0px;
+            right: 20px;
+            color: #333;
+        }
+        
     </style>
-    <div class="background-color header shadow" id="header" ></div>
+    <div class="header shadow" id="header" ></div>
     </div>
     <table>
         <tr >
@@ -163,15 +175,17 @@ const openNextPage = (nextLetter) => {
             <table style="margin-top: 20px;" cellspacing="10px" >
                 <tr>
                     <td onclick="${e => questions[0] == nextLetter ? correctAnswer() : wrongAnswer()}" >
-                        <div style="position: relative" class="button">
+                        <div style="position: relative;" class="button" >
                         <img src="assets/${questions[0]}.jpg" >
-                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[0].toUpperCase()}</label>
+                        <label class="watermark">${questions[0].toUpperCase()}</label>
+                        <img src="assets/border.png" style="position: absolute;top: -10px;left: -10px;width: 112%;height: 115%"/>
                         </div>
                     </td>
                     <td onclick="${e => questions[1] == nextLetter ? correctAnswer() : wrongAnswer()}" >
                         <div style="position: relative" class="button">
                         <img src="assets/${questions[1]}.jpg" >
-                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[1].toUpperCase()}</label>
+                        <label class="watermark">${questions[1].toUpperCase()}</label>
+                        <img src="assets/border.png" style="position: absolute;top: -10px;left: -10px;width: 112%;height: 115%"/>
                         </div>
                         
                     </td>
@@ -180,13 +194,15 @@ const openNextPage = (nextLetter) => {
                     <td onclick="${e => questions[2] == nextLetter ? correctAnswer() : wrongAnswer()}">
                         <div style="position: relative" class="button">
                         <img src="assets/${questions[2]}.jpg" >
-                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[2].toUpperCase()}</label>
+                        <label class="watermark">${questions[2].toUpperCase()}</label>
+                        <img src="assets/border.png" style="position: absolute;top: -10px;left: -10px;width: 112%;height: 115%"/>
                         </div>
                     </td>
                     <td onclick="${e => questions[3] == nextLetter ? correctAnswer() : wrongAnswer()}">
                         <div style="position: relative" class="button">
                         <img src="assets/${questions[3]}.jpg" >
-                        <label style="font-size: 4em;opacity: 0.1;position: absolute;bottom: 10px;right: 10px;color: #333">${questions[3].toUpperCase()}</label>
+                        <label class="watermark">${questions[3].toUpperCase()}</label>
+                        <img src="assets/border.png" style="position: absolute;top: -10px;left: -10px;width: 112%;height: 115%"/>
                         </div>
                     </td>
                 </tr>
@@ -194,7 +210,12 @@ const openNextPage = (nextLetter) => {
             </td>
         </tr>
     </table>
-    <button onclick="${e => resetScore()}" style="border: none;font-family: 'Lato';font-weight: 300;font-size:1em;color: white;background-color: red;position: absolute;bottom: 10px;left: 10px;">Reset</button>
+    <img src="assets/reset.png" onclick="${e => resetScore()}" style="position: absolute;bottom: 20px;left: 10px;width:40px;height:50px" >
+    <span style="position: absolute;bottom: 30px;right: 10px;">
+    <label style="font-family:'Gochi Hand';font-size:1.2em;">Listen to the word again : </label>
+    <img src="assets/ear.png" style="width:60px;height:80px;margin-bottom:-30px" class="animated pulse infinite" onclick="${e => audioFromLetter(nextLetter).play()}">
+    </span>
+    
     
 `,document.body).then(() => {
         setTimeout(() => render(html`<h1 class="">${score}</h1>`,document.getElementById('header')),1000);
