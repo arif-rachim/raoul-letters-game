@@ -19,8 +19,8 @@ const repaintPage = () => {
         .center{
             text-align: center;
         }
+        
         .start-button{
-            margin-top: 20px;
             font-size: 2em;
         }
         
@@ -47,7 +47,6 @@ const repaintPage = () => {
             <img src="assets/speaker.png" style="width: 40px;margin-bottom: -10px" class="animated pulse infinite">
             </div>
             <img src="assets/raoul-photo.jpg" class="raul-pic" alt="Responsive image" >
-            
         </div>
         <div class="center">
             <img src="assets/play.png" onclick="${e => startPlay()}" class="start-button animated bounceIn " style="width: 30%">
@@ -120,18 +119,12 @@ const openNextPage = (nextLetter) => {
         }
         
         
-        .shadow {
-            -webkit-box-shadow: -1px 1px 35px -3px rgba(0,0,0,0.64);
-            -moz-box-shadow: -1px 1px 35px -3px rgba(0,0,0,0.64);
-            box-shadow: -1px 1px 35px -3px rgba(0,0,0,0.64);
-        }
-        
         .header{
             text-align: right;
             padding : 10px;
             height : 60px;
             position : relative;
-            background-image: url("assets/header-background.jpg");
+            background-image: url("assets/header.jpg");
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -167,12 +160,12 @@ const openNextPage = (nextLetter) => {
         }
         
     </style>
-    <div class="header shadow" id="header" ></div>
+    <div class="header" id="header" ></div>
     </div>
     <table>
         <tr >
             <td style="text-align:center">
-            <table style="margin-top: 20px;" cellspacing="10px" >
+            <table style="margin-top: 0px;" cellspacing="10px" >
                 <tr>
                     <td onclick="${e => questions[0] == nextLetter ? correctAnswer() : wrongAnswer()}" >
                         <div style="position: relative;" class="button" >
@@ -212,7 +205,6 @@ const openNextPage = (nextLetter) => {
     </table>
     <img src="assets/reset.png" onclick="${e => resetScore()}" style="position: absolute;bottom: 20px;left: 10px;width:40px;height:50px" >
     <span style="position: absolute;bottom: 30px;right: 10px;">
-    <label style="font-family:'Gochi Hand';font-size:1.2em;">Listen to the word again : </label>
     <img src="assets/ear.png" style="width:60px;height:80px;margin-bottom:-30px" class="animated pulse infinite" onclick="${e => audioFromLetter(nextLetter).play()}">
     </span>
     

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2010-06-18:v11
+# v12
 
 CACHE:
 # Explicitly cached 'master entries'.
@@ -34,7 +34,7 @@ assets/y.jpg
 assets/z.jpg
 assets/border.png
 assets/ear.png
-assets/header-background.jpg
+assets/header.jpg
 assets/play.png
 assets/turn-on-logo.jpg
 assets/speaker.png
