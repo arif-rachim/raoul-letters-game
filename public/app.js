@@ -154,8 +154,6 @@ const openNextPage = (nextLetter) => {
             transform: translateY(4px);
         }
         
-        
-        
     </style>
     <div class="background-color header shadow" id="header" ></div>
     </div>
